@@ -78,23 +78,23 @@ int DuplicateID (char id[]){           // check id trung...
 		return 0;
 	}
 int notId(char str[]){
-    char *s = trim(str); // lo?i b? kho?ng tr?ng d?u/cu?i
-    if (strlen(s) == 0) return 0;   //check id khong dc am 
+    char *s = trim(str);
+    if (strlen(s) == 0) return 0;   
 	
 	 for (int i = 0; i < strlen(str); i++) {
         char c = str[i];
-        // Chi cho phép chu cái (A-Z, a-z) và s? (0-9)
+        
         if (!((c >= '0' && c <= '9') ||
               (c >= 'A' && c <= 'Z') ||
               (c >= 'a' && c <= 'z'))) {
-            return 0; // gap ký tu dac biet => sai
+            return 0; 
         }
     }
-    return 1; // 
+    return 1; 
 }
 
 	
-int DuplicatePhone(char phone[], int excludeIndex) {    // check so dien thoai trung
+int DuplicatePhone(char phone[], int excludeIndex) {   
     int i;
     for (i = 0; i < Account_size; i++) {
         if (i == excludeIndex) continue; 
@@ -104,7 +104,7 @@ int DuplicatePhone(char phone[], int excludeIndex) {    // check so dien thoai t
     	}
     return 0; 
 }
-int notNumber(char str[]){  // check so dien thoai co phai ky tu hay khong
+int notNumber(char str[]){ 
 	int i;
 	for ( i = 0; i < strlen (str) ; i++){
 		if ( str[i] < '0' || str[i] > '9' ){
@@ -114,7 +114,7 @@ int notNumber(char str[]){  // check so dien thoai co phai ky tu hay khong
 		return 1;
 }
 
-int notName(char str[]){           // cho phep nhap ten chu hoa chu thuong va khoang trang
+int notName(char str[]){           
 	int i;
 	for (int i = 0; i < strlen(str); i++) {
         char c = str[i];
@@ -134,26 +134,26 @@ int notName(char str[]){           // cho phep nhap ten chu hoa chu thuong va kh
 //Case 1:
 	
 void newAccount (){
-	if (Account_size >= MAX_ACCOUNT){   // check id max chua
+	if (Account_size >= MAX_ACCOUNT){ 
 		printf ("So luong tai khoan da dat gioi han.\n");
 			return ;
 		}		
 		while (getchar() != '\n');
 		
- 		struct Account addAccount; // acc 
+ 		struct Account addAccount;
  	 	
  	while (1){
- 	 	printf ("Moi ban nhap ma tai khoan: ");   // nhap vao ma 
+ 	 	printf ("Moi ban nhap ma tai khoan: ");   
 		fgets(addAccount.accountId,sizeof(addAccount.accountId),stdin);
 	 	addAccount.accountId[strcspn(addAccount.accountId, "\n")] = 0;
 	 	strcpy(addAccount.accountId, trim(addAccount.accountId));
-	 	if (strlen(addAccount.accountId) == 0){                // check id trong        
+	 	if (strlen(addAccount.accountId) == 0){                      
 	 		printf ("Ma tai khoan khong duoc de trong !\n");
 	 		continue;
-	 	}if (!notId(addAccount.accountId)){            // notid o tren nham check id am
+	 	}if (!notId(addAccount.accountId)){          
 				printf ("Id khong duoc nhap am va chua ky tu dac biet!!!\n");   
 				continue;
-	 	}if (DuplicateID(addAccount.accountId)) {      // duplicate ID check id trung
+	 	}if (DuplicateID(addAccount.accountId)) {      
 	 		printf("Ma tai khoan da ton tai, vui long nhap lai!\n");
             continue;
         }
@@ -184,13 +184,13 @@ while (1) {
 		printf ("Moi ban nhap so dien thoai: ");
 		fgets (addAccount.phone,sizeof(addAccount.phone),stdin);
 		addAccount.phone[strcspn(addAccount.phone, "\n")] = 0;
-				if (strlen(addAccount.phone) == 0){          // check sdt khong dc trong
+				if (strlen(addAccount.phone) == 0){          
 					printf ("So dien thoai khong duoc de trong !\n");  
 					continue;
-				}if (!notNumber(addAccount.phone)){    //  notnum check xem sdt co ky tu khong 
+				}if (!notNumber(addAccount.phone)){   
 					printf ("So dien thoai khong duoc nhap ki tu .Va khoang trong !!!\n");
 					continue;
-				}if (DuplicatePhone(addAccount.phone, -1)) {  //  duplicate check sdt da ton tai chua
+				}if (DuplicatePhone(addAccount.phone, -1)) {  
             		printf("So dien thoai da ton tai, vui long nhap lai!\n");    
             		continue;	
 		}break;
@@ -223,7 +223,7 @@ void updateAccounts() {
     if (!notId(id)) {
         printf("ID chi duoc chua chu va so, khong duoc ky tu dac biet! Vui long nhap lai.\n");
         continue;
-    }   // ID hop le	
+    }   	
 	int index = -1; 
     for (i = 0; i < Account_size; i++) {
         if (strcmp(addAccounts[i].accountId, id) == 0) {
@@ -233,7 +233,7 @@ void updateAccounts() {
     }
 
     if (index == -1) {
-        printf("Khong tim thay tai khoan! Vui long nhap lai.\n");           // check tk co ton tai khong
+        printf("Khong tim thay tai khoan! Vui long nhap lai.\n");    
         continue;
     }
 	break;
@@ -244,7 +244,7 @@ void updateAccounts() {
     printf("Ten : %s \n", addAccounts[index].fullName);
     printf("SDT: %s \n", addAccounts[index].phone);
    
-    char newName[50];  // khai bao ten moi
+    char newName[50]; 
     while (1) {
         printf("Nhap ten moi ( Khong nhap la giu nguyen ): ");
         fgets(newName, sizeof(newName), stdin);
@@ -252,10 +252,10 @@ void updateAccounts() {
         
          strcpy(addAccounts[index].fullName, trim(addAccounts[index].fullName));
 		
-        if (strlen(newName) == 0) {               // check name trong
+        if (strlen(newName) == 0) {               
             break; 
         }
-        if (!notName(newName)){                 //not name check ten nhap so
+        if (!notName(newName)){                 
         printf ("Ten chi duoc chu va khoang trang!!!\n");
         continue;
 		}
@@ -264,20 +264,20 @@ void updateAccounts() {
     }
 
     
-    char newPhone[15];  // khai bao sdt moi
+    char newPhone[15]; 
     while (1) {
         printf("Nhap so dien thoai moi ( Khong nhap la giu nguyen ): ");
         fgets(newPhone,sizeof(newPhone), stdin);
         newPhone[strcspn(newPhone, "\n")] = 0;
 
-        if (strlen(newPhone) == 0) {         // check kh nhao thi giu nguyen
+        if (strlen(newPhone) == 0) {       
         break;
         }
          if (!notNumber(newPhone)) {
-        printf("So dien thoai chi duoc nhap so!\n");       // notnumber  check kh dc nhap ki tu
+        printf("So dien thoai chi duoc nhap so!\n");      
         continue; 
     	}if (DuplicatePhone(newPhone, index)) {
-        printf("So dien thoai da ton tai, vui long nhap lai!\n");   //  duplucate check sdt da ton tai
+        printf("So dien thoai da ton tai, vui long nhap lai!\n");   
         continue;
     	}
 		strcpy(addAccounts[index].phone, newPhone);
@@ -356,7 +356,7 @@ void manageStatus() {
         printf("Lua chon khong hop le. Vui long chon 1-4.\n");
     }
 
-    // Helper to read confirmation (1 = confirm, 2 = cancel)
+
     int read_confirmation() {
         while (1) {
             printf("Nhap lua chon (1 = Xac nhan, 2 = Huy): ");
@@ -439,7 +439,7 @@ void manageStatus() {
 // case 4:
 
 void searchAccount() {
-    flush_stdin();   // Xóa b? nh? d?m tru?c khi nh?p
+    flush_stdin();   // XÃ³a b? nh? d?m tru?c khi nh?p
 
     char keyword[50];
     int found;
@@ -479,7 +479,7 @@ void searchAccount() {
             }
         }
 
-        // 2) Tim theo Ten (PHAN BIET CHU HOA/THUONG)
+        
         if (!found) {
             for (int i = 0; i < Account_size; i++) {
                 if (strstr(addAccounts[i].fullName, keyword) != NULL) {
@@ -500,7 +500,7 @@ void searchAccount() {
             continue;
         }
 
-        break; // tim thay -> thoat
+        break; 
     }
 }
 
@@ -544,7 +544,7 @@ void searchAccount() {
 
         for (int i = start; i < end; i++) {
             printf("| %-4d | %-15s | %-25s | %-12s | %-10.2f | %-10s |\n",
-                   i + 1,   // STT theo toàn danh sách
+                   i + 1,  
                    accounts[i].accountId,
                    accounts[i].fullName,
                    accounts[i].phone,
@@ -607,9 +607,7 @@ void sortAccounts(struct Account accounts[], int size) {
     char input[20];
     int choice;
 
-    // ============================
-    // INPUT + VALIDATION FULL
-    // ============================
+   
     while (1) {
     printf("\n----- SAP XEP DANH SACH -----\n");
     printf("1. Theo so du giam dan\n");
@@ -621,7 +619,7 @@ void sortAccounts(struct Account accounts[], int size) {
         continue;
     }
 
-    input[strcspn(input, "\n")] = 0;  // b? xu?ng dòng
+    input[strcspn(input, "\n")] = 0;  
 
     if (strlen(input) == 0) {
         printf("Khong duoc de trong! Moi nhap lai.\n");
@@ -639,9 +637,7 @@ void sortAccounts(struct Account accounts[], int size) {
 }
 
 
-    // ============================
-    // SAP XEP THEO SO DU GIAM DAN
-    // ============================
+   
     if (choice == 1) {
         for (int i = 0; i < size - 1; i++) {
             for (int j = i + 1; j < size; j++) {
@@ -654,9 +650,7 @@ void sortAccounts(struct Account accounts[], int size) {
         }
     }
 
-    // ============================
-    // SAP XEP TEN A-Z
-    // ============================
+    
     else if (choice == 2) {
         for (int i = 0; i < size - 1; i++) {
             for (int j = i + 1; j < size; j++) {
@@ -672,7 +666,7 @@ void sortAccounts(struct Account accounts[], int size) {
     printf("\n Da sap xep xong!\n");
 }
  //case 7: chuyen xien
-//case 7: chuyen tien
+
 void Transactions() {
     flush_stdin();
     printf("\n=========== Chuyen khoan ===========\n");
@@ -686,7 +680,6 @@ void Transactions() {
     double money;
     int senderIndex = -1, receiverIndex = -1;
 
-    // --- Nhap ID nguoi gui ---
     while (1) {
         printf("Nhap ID tai khoan chuyen tien: ");
         fgets(sendId, sizeof(sendId), stdin);
@@ -718,7 +711,7 @@ void Transactions() {
         break;
     }
 
-    // --- Nhap ID nguoi nhan ---
+    
     while (1) {
         printf("Nhap ID tai khoan nhan tien: ");
         fgets(receiveId, sizeof(receiveId), stdin);
@@ -755,7 +748,7 @@ void Transactions() {
         break;
     }
 
-    // --- Nhap so tien ---
+    
     while (1) {
         printf("Nhap so tien: ");
         if (scanf("%lf", &money) != 1) {
@@ -778,7 +771,7 @@ void Transactions() {
         break;
     }
 
-    // --- Hien thi thong tin giao dich va xac nhan ---
+   
     printf("\nThong tin giao dich:\n");
     printf("Nguoi gui: %s\n", addAccounts[senderIndex].fullName);
     printf("Nguoi nhan: %s\n", addAccounts[receiverIndex].fullName);
@@ -790,11 +783,11 @@ void Transactions() {
         return;
     }
 
-    // --- Cap nhat so du sau khi xac nhan ---
+   
     addAccounts[senderIndex].balance -= money;
     addAccounts[receiverIndex].balance += money;
 
-    // --- Luu giao dich ---
+  
     if (transaction_size < MAX_TRANSACTION) {
         strcpy(addTran[transaction_size].senderId, sendId);
         strcpy(addTran[transaction_size].receiverId, receiveId);
@@ -816,7 +809,7 @@ void viewTransactionHistory() {
 
     printf("\n===== XEM LICH SU GIAO DICH =====\n");
 
-    // --- Nh?p mã tài kho?n ---
+    
     while (1) {
         printf("Nhap ID tai khoan: ");
         fgets(targetId, sizeof(targetId), stdin);
@@ -827,7 +820,7 @@ void viewTransactionHistory() {
             continue;
         }
 
-        // Ki?m tra t?n t?i
+       
         exist = 0;
         for (int i = 0; i < Account_size; i++) {
             if (strcmp(addAccounts[i].accountId, targetId) == 0) {
@@ -844,7 +837,7 @@ void viewTransactionHistory() {
         break;
     }
 
-    // --- L?c giao d?ch liên quan ---
+   
     int found = 0;
 
     printf("\n===== LICH SU GIAO DICH CUA TAI KHOAN %s =====\n", targetId);
@@ -858,7 +851,7 @@ void viewTransactionHistory() {
             found++;
             char *direction = (strcmp(addTran[i].senderId, targetId) == 0) ? "Out" : "In";
 
-            // L?y tên d?y d? ngu?i g?i và nh?n
+           
             char senderName[50] = "", receiverName[50] = "";
             for (int j = 0; j < Account_size; j++) {
                 if (strcmp(addAccounts[j].accountId, addTran[i].senderId) == 0) {
@@ -942,7 +935,7 @@ int main (){
 			break;
 			
 			case 8:
-				 viewTransactionHistory();
+				viewTransactionHistory();
 			break;	 
 			
 			case 9:
